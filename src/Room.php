@@ -8,17 +8,13 @@
 
 namespace App\Room;
 
+use App\Room\Reservation;
+
 interface ReservableInterface
 {
-//    public function addReservation($reservation)
-//    {
-//
-//    }
-//
-//    public function removeReservation($reservation)
-//    {
-//
-//    }
+    public function addReservation(Reservation $reservation) :void;
+
+    public function removeReservation(Reservation $reservation) :void;
 }
 
 class Room implements ReservableInterface
@@ -156,8 +152,16 @@ class Room implements ReservableInterface
         $this->reservations = $reservations;
     }
 
+    public function addReservation(\App\Room\Reservation $reservation): void
+    {
+        $this->reservations = $reservation;
+    }
 
-
+    public function removeReservation(\App\Room\Reservation $reservation): void
+    {
+        var_dump($reservation);
+        die;
+    }
 }
 
 class SingleRoom extends Room
@@ -196,6 +200,80 @@ class SingleRoom extends Room
         return $this->price;
     }
 
+}
 
+class BedRoom extends Room
+{
+    /** @var int */
+    private $roomNumber;
+
+    /** @var int */
+    private $price;
+
+    public function __construct(int $roomNumber, int $price)
+    {
+        $this->roomNumber = $roomNumber;
+        $this->price = $price;
+        $this->setBedCount(2);
+        $this->setBalcony(true);
+        $this->setRoomType('Gold room');
+        $this->setRestroom(true);
+        $this->setPrice($this->price);
+        $this->setExtras(array('Tv', 'Air-Conditioner', 'refrigerator', 'mini-bar', 'bathtub'));
+    }
+
+    /**
+     * @return int
+     */
+    public function getRoomNumber(): int
+    {
+        return $this->roomNumber;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPrice(): int
+    {
+        return $this->price;
+    }
+
+}
+
+class Apartament extends Room
+{
+    /** @var int */
+    private $roomNumber;
+
+    /** @var int */
+    private $price;
+
+    public function __construct(int $roomNumber, int $price)
+    {
+        $this->roomNumber = $roomNumber;
+        $this->price = $price;
+        $this->setBedCount(4);
+        $this->setBalcony(true);
+        $this->setRoomType('Diamond room');
+        $this->setRestroom(true);
+        $this->setPrice($this->price);
+        $this->setExtras(array('Tv', 'Air-Conditioner', 'refrigerator', 'mini-bar', 'bathtub', 'kitchen box', 'free Wi-fi'));
+    }
+
+    /**
+     * @return int
+     */
+    public function getRoomNumber(): int
+    {
+        return $this->roomNumber;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPrice(): int
+    {
+        return $this->price;
+    }
 
 }
